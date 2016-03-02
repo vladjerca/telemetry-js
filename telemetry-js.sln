@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "telemetry-js", "telemetry-js\telemetry-js.njsproj", "{D9994C67-8848-4C87-9972-934BD227C107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telemetry.Net", "Telemetry.Net\Telemetry.Net.csproj", "{72AC14AB-F672-425D-883D-00B2A5B73F17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telemetry.Example", "Telemetry.Test\Telemetry.Example.csproj", "{1AB9D54B-4F5F-498C-8DA1-28C42418A3E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9994C67-8848-4C87-9972-934BD227C107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9994C67-8848-4C87-9972-934BD227C107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9994C67-8848-4C87-9972-934BD227C107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9994C67-8848-4C87-9972-934BD227C107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72AC14AB-F672-425D-883D-00B2A5B73F17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AC14AB-F672-425D-883D-00B2A5B73F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AC14AB-F672-425D-883D-00B2A5B73F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AC14AB-F672-425D-883D-00B2A5B73F17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AB9D54B-4F5F-498C-8DA1-28C42418A3E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB9D54B-4F5F-498C-8DA1-28C42418A3E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB9D54B-4F5F-498C-8DA1-28C42418A3E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB9D54B-4F5F-498C-8DA1-28C42418A3E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
