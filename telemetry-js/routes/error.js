@@ -3,12 +3,12 @@ var router = express.Router();
 
 router.use(function (req, res) {
     res.status(400);
-    res.send('You seem to be lost... AND ALONE!');
+    return res.send('You seem to be lost... AND ALONE!');
 });
 
 router.use(function (error, req, res, next) {
     res.status(500);
-    res.json({ title: '500: Internal Server Error', error: error });
+    return res.json({ title: '500: Internal Server Error', error: error });
 });
 
 module.exports = router;

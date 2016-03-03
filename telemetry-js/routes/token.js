@@ -1,7 +1,12 @@
 ﻿var express = require('express');
 var router = express.Router();
-var config = require('../config/config')
-var jwt = require('jsonwebtoken'); // https://jwt.io/
+var config = require('../config/app-configuration')
+/* 
+ * For more information regarding JWT 
+ * Visit: https://jwt.io/
+ * 
+ * */
+var jwt = require('jsonwebtoken');
 
 router.use(function (req, res, next) {
     if (config.useAuthToken) {

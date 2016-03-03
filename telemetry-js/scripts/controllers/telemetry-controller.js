@@ -12,7 +12,7 @@ app.controller('telemetry-controller', function ($scope, $http, $mdSidenav) {
             $scope.widgets.push({
                 name: "Event count",
                 order: 1,
-                data: {
+                response: {
                     dataArray: data.dataArray,
                     labelArray: data.labelArray,
                     chartType: 'Pie'

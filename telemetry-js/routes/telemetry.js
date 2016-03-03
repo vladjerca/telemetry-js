@@ -9,19 +9,19 @@ router.route('/telemetry')
         if (err)
             return res.send(err);
         
-        res.json(telemetrys);
+        return res.json(telemetrys);
     });
 })
 
 // CREATE ENTRY
 .post(function (req, res) {
     var telemetry = new telemetryDb(req.body);
-
+    console.log(telemetry);
     telemetry.save(function (err) {
         if (err)
             return res.send(err);
         
-        res.send({ message: telemetry.applicationName + ' (' + telemetry.eventType + ') added succesfully!' });
+        return res.send({ message: telemetry.applicationName + ' (' + telemetry.eventType + ') added succesfully!' });
     });
 });
 
@@ -40,7 +40,7 @@ router.route('/telemetry/:id')
             if (err)
                 return res.send(err);
             
-            res.json({ message: telemetry.applicationName + ' (' + telemetry.eventType + ') updated succesfully!' });
+            return res.json({ message: telemetry.applicationName + ' (' + telemetry.eventType + ') updated succesfully!' });
         });
     });
 })
@@ -51,7 +51,7 @@ router.route('/telemetry/:id')
         if (err)
             return res.send(err);
         
-        res.json(telemetry);
+        return res.json(telemetry);
     });
 })
 
@@ -61,7 +61,7 @@ router.route('/telemetry/:id')
         if (err)
             return res.send(err);
         
-        res.json({ message: telemetry.applicationName + ' (' + telemetry.eventType + ') deleted succesfully!' });
+        return res.json({ message: telemetry.applicationName + ' (' + telemetry.eventType + ') deleted succesfully!' });
     });
 });
 

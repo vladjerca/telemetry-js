@@ -1,59 +1,56 @@
-﻿// general dependencies
+﻿/* --------------------- PACKAGES --------------------- */
 var express = require('express');
-var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var config = require('./config/config');
+var config = require('./config/app-configuration');
+var logger = require('./logging/logger');
 
-// routes 
+/* ------------------- IMPORT ROUTES ------------------ */
 var home = require('./routes/index');
 var telemetry = require('./routes/telemetry');
-var apps = require('./routes/apps');
-var appStats = require('./routes/appStats');
+var applications = require('./routes/applications');
+var applicationStatistics = require('./routes/applicationStatistics');
 var error = require('./routes/error');
 var token = require('./routes/token');
 
 var app = express();
 
+/* ----------------- STATIC RESOURCES ----------------- */
 app.use(express.static('scripts'));
 app.use(express.static('styles'));
 app.use(express.static('views'));
 
-var db = mongoose.connect(config.connectionString).connection;
-
-db.on('error', function (err) { console.log(err.message); });
-
+/* --------------------- DATABASE --------------------- */
+var db = mongoose.connect(config.connectionString, logger.logError).connection;
+db.on('error', logger.logError);
 db.once('open', function () {
-    console.log("mongodb connection open");
+    console.log("mongo connection established...");
 });
 
+/* ---------------------- HEADERS --------------------- */
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
+/* ------------------- BODY PARSERS ------------------ -*/
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+/* ---------------------- ROUTES ---------------------- */
 app.use('/', home);
 app.use('/api/telemetry', token);
 app.use('/api', telemetry);
-app.use('/api', appStats);
-app.use('/api', apps);
-
+app.use('/api', applicationStatistics);
+app.use('/api', applications);
 app.use(error);
 
-var appPort = process.env.OPENSHIFT_NODEJS_PORT || 1337;
-var appIp = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-
-app.listen(appPort, appIp, function () {
-    console.log("Listening on " + appIp + ":" + appPort);
+/* ----------------------- START ---------------------- */
+app.listen(config.appPort, config.ipAddress, function () {
+    console.log("Listening on " + config.ipAddress + ":" + config.appPort);
 });
 
-process.on('uncaughtException', function (err) {
-    console.log(err);
-}); 
+process.on('uncaughtException', logger.logError);

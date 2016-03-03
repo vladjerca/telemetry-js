@@ -32,10 +32,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
-    <Compile Include="config\config.js" />
+    <Compile Include="config\app-configuration.js" />
+    <Compile Include="logging\logger.js" />
     <Compile Include="models\telemetry.js" />
-    <Compile Include="routes\apps.js" />
-    <Compile Include="routes\appStats.js" />
+    <Compile Include="routes\applications.js" />
+    <Compile Include="routes\applicationStatistics.js" />
     <Compile Include="routes\error.js" />
     <Compile Include="routes\telemetry.js" />
     <Compile Include="routes\index.js" />
@@ -57,6 +58,7 @@
     <Folder Include="bin\" />
     <Folder Include="models\" />
     <Folder Include="config\" />
+    <Folder Include="logging\" />
     <Folder Include="views\" />
     <Folder Include="routes\" />
     <Folder Include="scripts\" />

@@ -5,9 +5,9 @@ var fs = require('fs');
 router.get('/', function (req, res) {
     fs.readFile('./views/index.html', function (err, data) { 
         if (err)
-            res.send(err);
+            return res.send(err);
 
-        res.send(data);
+        return res.send(data);
     });
 });
 
