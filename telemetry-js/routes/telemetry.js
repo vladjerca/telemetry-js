@@ -16,12 +16,12 @@ router.route('/telemetry')
 // CREATE ENTRY
 .post(function (req, res) {
     var telemetry = new telemetryDb(req.body);
-    console.log(telemetry);
+ 
     telemetry.save(function (err) {
         if (err)
             return res.send(err);
         
-        return res.send({ message: telemetry.applicationName + ' (' + telemetry.eventType + ') added succesfully!' });
+        return res.json({ message: telemetry.applicationName + ' (' + telemetry.eventType + ') added succesfully!' });
     });
 });
 

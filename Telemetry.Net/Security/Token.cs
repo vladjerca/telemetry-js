@@ -11,7 +11,7 @@ namespace Telemetry.Net.Security
 
         private static Dictionary<string, object> payload = new Dictionary<string, object>
         {
-            // set this in the connection string for easy cycles
+            // set this in the connection string for easy cycles - server can also check for a friendly app name to give permission
             { "applicationName", ConfigurationManager.AppSettings["applicationName"] },
             // change this and leave it in the binary
             { "somethingDearToYou", "dEaDpOol" }

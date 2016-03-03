@@ -10,10 +10,16 @@ namespace Telemetry.Example
     {
         static void Main(string[] args)
         {
-            TelemetryJS.Log(new TelemetryData()
+            Go();
+            Console.WriteLine("Wait for reply...");
+            Console.ReadLine();
+        }
+
+        public static async void Go()
+        {
+            string response = await TelemetryJS.LogAsync(new TelemetryData()
             {
                 ApplicationName = "Test",
-                Date = DateTime.Now,
                 EventType = EventType.UserEvent,
                 EventData = new TestData
                 {
@@ -27,6 +33,8 @@ namespace Telemetry.Example
                     }
                 }
             }, true);
+
+            Console.WriteLine(response);
         }
     }
 }

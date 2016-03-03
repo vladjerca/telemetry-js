@@ -7,7 +7,7 @@ var telemetrySchema = new Schema({
         index: true, 
         required: true
     },
-    date: {
+    timestamp: {
         type: Date,
         default: Date.now
     },

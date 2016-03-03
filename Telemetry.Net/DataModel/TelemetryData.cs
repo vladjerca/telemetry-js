@@ -7,9 +7,15 @@ namespace Telemetry.Net.DataModel
 {
     public class TelemetryData
     {        
+        public TelemetryData()
+        {
+            Timestamp = DateTime.Now.ToUniversalTime();
+        }
+
         public string ApplicationName { get; set; }
 
-        public DateTime Date { get; set; }
+        [JsonProperty]
+        internal DateTime Timestamp { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public Enum EventType { get; set; }

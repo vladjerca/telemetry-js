@@ -74,13 +74,13 @@ var telemetry = (function () {
         var isMonthly = options.projectionType === projectionTypes.monthly;
         
         var projection = {};        
-        projection.year = { $year: "$date" };
+        projection.year = { $year: "$timestamp" };
 
         var groupId = {};
         groupId.year = "$year";
 
         if (isMonthly) {
-            projection.month = { $month: "$date" };
+            projection.month = { $month: "$timestamp" };
             groupId.$month = "$month";
         }
 
