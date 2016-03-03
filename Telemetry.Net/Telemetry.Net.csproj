@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Config.cs" />
     <Compile Include="Core\TelemetryJS.cs" />
     <Compile Include="Enums\EventType.cs" />
     <Compile Include="Exceptions\TelemetryConfigurationException.cs" />

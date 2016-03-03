@@ -1,6 +1,7 @@
 ﻿using Jose;
 using System.Collections.Generic;
 using System.Configuration;
+using Telemetry.Net.Configuration;
 
 namespace Telemetry.Net.Security
 {
@@ -12,7 +13,7 @@ namespace Telemetry.Net.Security
         private static Dictionary<string, object> payload = new Dictionary<string, object>
         {
             // set this in the connection string for easy cycles - server can also check for a friendly app name to give permission
-            { "applicationName", ConfigurationManager.AppSettings["applicationName"] },
+            { "applicationName", Config.ApplicationName },
             // change this and leave it in the binary
             { "somethingDearToYou", "dEaDpOol" }
         };

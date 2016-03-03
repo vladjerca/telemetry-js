@@ -1,47 +1,45 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Telemetry.Net.Configuration;
 using Telemetry.Net.DataModel;
-using Telemetry.Net.Exceptions;
 using Telemetry.Net.Security;
 
 namespace Telemetry.Net.Core
 {
     public static class TelemetryJS
     {
-        private static string urlConfigKey = "telemetryUrl";
-        private static string endpoint = ConfigurationManager.AppSettings[urlConfigKey] ?? string.Empty;
-
         private static JsonSerializerSettings serializationSettings = new JsonSerializerSettings()
                                                                     {
                                                                         ContractResolver = new CamelCasePropertyNamesContractResolver(),
                                                                         NullValueHandling = NullValueHandling.Ignore,                                                                        
                                                                     };
 
-        static TelemetryJS()
+        private static WebRequest GenerateRequest(bool useAuthToken)
         {
-            if (string.IsNullOrWhiteSpace(endpoint))
-            {
-                throw new TelemetryConfigurationException(string.Format("The '{0}' key cannot be found in the application configuration.", urlConfigKey));
-            }
+            var request = WebRequest.Create(Config.TelemetryEndpoint);
+            request.ContentType = "application/json";
+            request.Method = "POST";
+
+            if (useAuthToken)
+                request.Headers.Add("x-access-token", Token.Generate);
+
+            return request;
         }
 
         public static string Log(TelemetryData details, bool useAuthToken = false)
         {
             var result = string.Empty;
 
+            if (string.IsNullOrWhiteSpace(details.ApplicationName))
+                details.ApplicationName = Config.ApplicationName;
+
             try
             {
-                var request = WebRequest.Create(endpoint);
-                request.ContentType = "application/json";
-                request.Method = "POST";
-
-                if (useAuthToken)
-                    request.Headers.Add("x-access-token", Token.Generate);
+                var request = GenerateRequest(useAuthToken);
 
                 string json = JsonConvert.SerializeObject(details, serializationSettings);
 
@@ -71,14 +69,12 @@ namespace Telemetry.Net.Core
         {
             var result = string.Empty;
 
+            if (string.IsNullOrWhiteSpace(details.ApplicationName))
+                details.ApplicationName = Config.ApplicationName;
+
             try
             {
-                var request = WebRequest.Create(endpoint);
-                request.ContentType = "application/json";
-                request.Method = "POST";
-
-                if (useAuthToken)
-                    request.Headers.Add("x-access-token", Token.Generate);
+                var request = GenerateRequest(useAuthToken);
 
                 string json = JsonConvert.SerializeObject(details, serializationSettings);
 
