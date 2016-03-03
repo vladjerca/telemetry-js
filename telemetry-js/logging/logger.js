@@ -1,5 +1,5 @@
-﻿var errorHandler = function (err) {
-    if(err)
+﻿var errorHandler = function(err) {
+    if (err)
         console.log(err);
 };
 

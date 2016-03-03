@@ -5,38 +5,27 @@ namespace Telemetry.Net.Configuration
 {
     public static class Config
     {
-        private static string urlConfigKey = "telemetryUrl",
-                              appNameConfigKey = "applicationName";
+        private const string UrlConfigKey = "telemetryUrl";
+        private const string AppNameConfigKey = "applicationName";
 
-        private static string endpoint = ConfigurationManager.AppSettings[urlConfigKey] ?? string.Empty;
-        private static string applicationName = ConfigurationManager.AppSettings["applicationName"] ?? string.Empty;
+        public static readonly string TelemetryEndpoint = ConfigurationManager.AppSettings[UrlConfigKey] ??
+                                                           string.Empty;
+
+        public static readonly string ApplicationName = ConfigurationManager.AppSettings["applicationName"] ??
+                                                        string.Empty;
 
         static Config()
         {
-            if (string.IsNullOrWhiteSpace(endpoint))
+            if (string.IsNullOrWhiteSpace(TelemetryEndpoint))
             {
-                throw new TelemetryConfigurationException(string.Format("The '{0}' key cannot be found in the application configuration.", urlConfigKey));
+                throw new TelemetryConfigurationException(
+                    $"The '{UrlConfigKey}' key cannot be found in the application configuration.");
             }
 
-            if (string.IsNullOrWhiteSpace(applicationName))
+            if (string.IsNullOrWhiteSpace(ApplicationName))
             {
-                throw new TelemetryConfigurationException(string.Format("The '{0}' key cannot be found in the application configuration.", appNameConfigKey));
-            }
-        }
-
-        public static string ApplicationName
-        {
-            get
-            {
-                return applicationName;
-            }
-        }
-
-        public static string TelemetryEndpoint
-        {
-            get
-            {
-                return endpoint;
+                throw new TelemetryConfigurationException(
+                    $"The '{AppNameConfigKey}' key cannot be found in the application configuration.");
             }
         }
     }

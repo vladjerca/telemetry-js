@@ -5,6 +5,6 @@
         Event,
         UserEvent,
         Error,
-        UserError,
+        UserError
     }
 }

@@ -1,10 +1,10 @@
-﻿var mongoose = require('mongoose');
+﻿var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var telemetrySchema = new Schema({
     applicationName: {
-        type: String, 
-        index: true, 
+        type: String,
+        index: true,
         required: true
     },
     timestamp: {
@@ -12,11 +12,11 @@ var telemetrySchema = new Schema({
         default: Date.now
     },
     eventType: {
-        type: String, 
-        index: true, 
+        type: String,
+        index: true,
         required: true
     },
     eventData: Schema.Types.Mixed
 });
 
-module.exports = mongoose.model('Telemetry', telemetrySchema);
+module.exports = mongoose.model("Telemetry", telemetrySchema);

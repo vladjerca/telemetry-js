@@ -1,6 +1,5 @@
-﻿using Jose;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Collections.Generic;
+using Jose;
 using Telemetry.Net.Configuration;
 
 namespace Telemetry.Net.Security
@@ -8,22 +7,20 @@ namespace Telemetry.Net.Security
     public static class Token
     {
         // change this for personal builds
-        private static byte[] secretKey = new byte[] { 164, 60, 194, 0, 161, 189, 41, 38, 130, 89, 141, 164, 45, 170, 159, 209, 69, 137, 243, 216, 191, 131, 47, 250, 32, 107, 231, 117, 37, 158, 225, 234 };
-
-        private static Dictionary<string, object> payload = new Dictionary<string, object>
+        private static readonly byte[] SecretKey =
         {
-            // set this in the connection string for easy cycles - server can also check for a friendly app name to give permission
-            { "applicationName", Config.ApplicationName },
-            // change this and leave it in the binary
-            { "somethingDearToYou", "dEaDpOol" }
+            164, 60, 194, 0, 161, 189, 41, 38, 130, 89, 141, 164, 45, 170, 159,
+            209, 69, 137, 243, 216, 191, 131, 47, 250, 32, 107, 231, 117, 37, 158, 225, 234
         };
 
-        public static string Generate
+        private static readonly Dictionary<string, object> Payload = new Dictionary<string, object>
         {
-            get
-            {
-                return JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
-            }
-        }
+            // set this in the connection string for easy cycles - server can also check for a friendly app name to give permission
+            {"applicationName", Config.ApplicationName},
+            // change this and leave it in the binary
+            {"somethingDearToYou", "dEaDpOol"}
+        };
+
+        public static string Generate => JWT.Encode(Payload, SecretKey, JwsAlgorithm.HS256);
     }
 }

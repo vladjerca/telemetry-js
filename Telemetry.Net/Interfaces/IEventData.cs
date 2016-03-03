@@ -1,4 +1,6 @@
 ﻿namespace Telemetry.Net.Interfaces
 {
-    public interface IEventData { }
+    public interface IEventData
+    {
+    }
 }

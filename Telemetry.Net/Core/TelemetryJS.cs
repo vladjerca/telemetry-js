@@ -1,22 +1,22 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Telemetry.Net.Configuration;
 using Telemetry.Net.DataModel;
 using Telemetry.Net.Security;
 
 namespace Telemetry.Net.Core
 {
-    public static class TelemetryJS
+    public static class TelemetryJs
     {
-        private static JsonSerializerSettings serializationSettings = new JsonSerializerSettings()
-                                                                    {
-                                                                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                                                                        NullValueHandling = NullValueHandling.Ignore,                                                                        
-                                                                    };
+        private static readonly JsonSerializerSettings SerializationSettings = new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling = NullValueHandling.Ignore
+        };
 
         private static WebRequest GenerateRequest(bool useAuthToken)
         {
@@ -32,7 +32,7 @@ namespace Telemetry.Net.Core
 
         public static string Log(TelemetryData details, bool useAuthToken = false)
         {
-            var result = string.Empty;
+            string result;
 
             if (string.IsNullOrWhiteSpace(details.ApplicationName))
                 details.ApplicationName = Config.ApplicationName;
@@ -41,7 +41,7 @@ namespace Telemetry.Net.Core
             {
                 var request = GenerateRequest(useAuthToken);
 
-                string json = JsonConvert.SerializeObject(details, serializationSettings);
+                var json = JsonConvert.SerializeObject(details, SerializationSettings);
 
                 using (var streamWriter = new StreamWriter(request.GetRequestStream()))
                 {
@@ -57,17 +57,17 @@ namespace Telemetry.Net.Core
                     result = streamReader.ReadToEnd();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 result = e.Message;
             }
-            
+
             return result;
         }
 
         public static async Task<string> LogAsync(TelemetryData details, bool useAuthToken = false)
         {
-            var result = string.Empty;
+            string result;
 
             if (string.IsNullOrWhiteSpace(details.ApplicationName))
                 details.ApplicationName = Config.ApplicationName;
@@ -76,7 +76,7 @@ namespace Telemetry.Net.Core
             {
                 var request = GenerateRequest(useAuthToken);
 
-                string json = JsonConvert.SerializeObject(details, serializationSettings);
+                var json = JsonConvert.SerializeObject(details, SerializationSettings);
 
                 using (var streamWriter = new StreamWriter(await request.GetRequestStreamAsync()))
                 {
@@ -86,7 +86,7 @@ namespace Telemetry.Net.Core
                 }
 
                 var response = await request.GetResponseAsync();
-                
+
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
                 {
                     result = await streamReader.ReadToEndAsync();

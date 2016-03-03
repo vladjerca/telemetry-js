@@ -4,8 +4,12 @@ namespace Telemetry.Net.Exceptions
 {
     public class TelemetryConfigurationException : Exception
     {
-        public TelemetryConfigurationException() : base() { }
+        public TelemetryConfigurationException()
+        {
+        }
 
-        public TelemetryConfigurationException(string message) : base(message) { }
+        public TelemetryConfigurationException(string message) : base(message)
+        {
+        }
     }
 }

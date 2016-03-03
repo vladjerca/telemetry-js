@@ -1,6 +1,6 @@
 ﻿using Telemetry.Net.Interfaces;
 
-namespace Telemetry.Test.Example
+namespace Telemetry.Test.Models
 {
     public class TestData : IEventData
     {

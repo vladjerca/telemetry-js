@@ -1,1 +1,1 @@
-var app = angular.module('telemetry-js', ['ngMaterial', 'chart.js']);
+var app = angular.module("telemetry-js", ["ngMaterial", "chart.js"]);

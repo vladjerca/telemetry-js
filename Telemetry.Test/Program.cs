@@ -2,13 +2,13 @@
 using Telemetry.Net.Core;
 using Telemetry.Net.DataModel;
 using Telemetry.Net.Enums;
-using Telemetry.Test.Example;
+using Telemetry.Test.Models;
 
 namespace Telemetry.Example
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Go();
             Console.WriteLine("Wait for reply...");
@@ -17,7 +17,7 @@ namespace Telemetry.Example
 
         public static async void Go()
         {
-            string response = await TelemetryJS.LogAsync(new TelemetryData()
+            var response = await TelemetryJs.LogAsync(new TelemetryData
             {
                 ApplicationName = "Test",
                 EventType = EventType.UserEvent,
