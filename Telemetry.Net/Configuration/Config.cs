@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using Telemetry.Net.Exceptions;
 
 namespace Telemetry.Net.Configuration
@@ -13,6 +14,14 @@ namespace Telemetry.Net.Configuration
 
         public static readonly string ApplicationName = ConfigurationManager.AppSettings["applicationName"] ??
                                                         string.Empty;
+
+        internal static readonly Dictionary<string, object> SecurityPayload = new Dictionary<string, object>
+        {
+            // set this in the connection string for easy cycles - server can also check for a friendly app name to give permission
+            {"applicationName", Config.ApplicationName},
+            // change this and leave it in the binary
+            {"somethingDearToYou", "dEaDpOol"}
+        };
 
         static Config()
         {

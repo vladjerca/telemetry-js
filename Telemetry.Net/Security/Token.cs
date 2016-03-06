@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Jose;
+﻿using Jose;
 using Telemetry.Net.Configuration;
 
 namespace Telemetry.Net.Security
@@ -13,14 +12,6 @@ namespace Telemetry.Net.Security
             209, 69, 137, 243, 216, 191, 131, 47, 250, 32, 107, 231, 117, 37, 158, 225, 234
         };
 
-        private static readonly Dictionary<string, object> Payload = new Dictionary<string, object>
-        {
-            // set this in the connection string for easy cycles - server can also check for a friendly app name to give permission
-            {"applicationName", Config.ApplicationName},
-            // change this and leave it in the binary
-            {"somethingDearToYou", "dEaDpOol"}
-        };
-
-        public static string Generate => JWT.Encode(Payload, SecretKey, JwsAlgorithm.HS256);
+        public static string Generate => JWT.Encode(Config.SecurityPayload, SecretKey, JwsAlgorithm.HS256);
     }
 }
