@@ -123,6 +123,75 @@ var telemetry = (function() {
     };
 })();
 
+router.route("/applicationStatistics/forApp/:appName/countEvents")
+    .get(function(req, res) {
+
+        var appName = req.params.appName;
+
+        telemetryDb.aggregate([
+            {
+                $match: { applicationName: appName }
+            },
+            {
+                $group: {
+                    _id: { applicationName: "$applicationName", eventType: "$eventType" },
+                    count: { $sum: 1 }
+                }
+            },
+            { $sort: { count: -1 } }
+        ], function(err, result) {
+            if (err)
+                return res.json(err);
+
+            var dataArray = [],
+                labelArray = [];
+
+            for (var i = 0; i < result.length; i++) {
+                labelArray[i] = result[i]._id.eventType;
+                dataArray[i] = result[i].count;
+            }
+
+            return res.json({
+                labelArray: labelArray,
+                dataArray: dataArray
+            });
+        });
+});
+
+router.route("/applicationStatistics/forApp/:appName/countEvents")
+    .get(function (req, res) {
+    var appName = req.params.appName;
+    
+    telemetryDb.aggregate([
+        {
+            $match: { applicationName: appName }
+        },
+        {
+            $group: {
+                _id: { applicationName: "$applicationName", eventType: "$eventType" },
+                count: { $sum: 1 }
+            }
+        },
+        { $sort: { count: -1 } }
+    ], function (err, result) {
+        if (err)
+            return res.json(err);
+        
+        var dataArray = [],
+            labelArray = [];
+        
+        for (var i = 0; i < result.length; i++) {
+            labelArray[i] = result[i]._id.eventType;
+            dataArray[i] = result[i].count;
+        }
+        
+        return res.json({
+            labelArray: labelArray,
+            dataArray: dataArray
+        });
+    });
+}); 
+
 router.route("/applicationStatistics/forApp/:appName/countEvent/:eventType")
     .get(function(req, res) {
         var appName = req.params.appName,
