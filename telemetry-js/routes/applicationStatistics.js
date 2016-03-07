@@ -81,20 +81,22 @@ var telemetry = (function() {
 
         if (isMonthly) {
             projection.month = { $month: "$timestamp" };
-            groupId.$month = "$month";
+            groupId.month = "$month";
         }
 
-        aggregateOptions.push({
+        
+        aggregationOptions.push({
             $project: projection
         });
-        aggregateOptions.push({
+        
+        aggregationOptions.push({
             $group: {
                 _id: groupId,
                 data: { $sum: 1 }
             }
         });
-
-        aggregateOptions.push({
+        
+        aggregationOptions.push({
             $sort: { data: -1 }
         });
 
@@ -143,17 +145,17 @@ router.route("/applicationStatistics/forApp/:appName/countEvents")
             if (err)
                 return res.json(err);
 
-            var dataArray = [],
-                labelArray = [];
+            var data = [],
+                fields = [];
 
             for (var i = 0; i < result.length; i++) {
-                labelArray[i] = result[i]._id.eventType;
-                dataArray[i] = result[i].count;
+                fields[i] = result[i]._id.eventType;
+                data[i] = result[i].count;
             }
 
             return res.json({
-                labelArray: labelArray,
-                dataArray: dataArray
+                fields: fields,
+                data: data
             });
         });
 });
@@ -262,46 +264,46 @@ router.route("/applicationStatistics/forApp/:appName/:eventType/groupBy/:field/"
         });
     });
 
-router.route("/applicationStatistics/forApp/:appName/:eventType/groupBy/:field/countFor/:max")
-    .get(function(req, res) {
-        var appName = req.params.appName,
-            eventType = req.params.eventType,
-            fieldName = req.params.field,
-            count = req.params.max;
-
-        telemetry.aggregateByField({
-            applicationName: appName,
-            eventType: eventType,
-            fieldName: fieldName,
-            limit: max
-        }, function(err, result) {
-            if (err)
-                return res.json(err);
-            return res.json(result);
-        });
+router.route("/applicationStatistics/forApp/:appName/:eventType/groupBy/:field/top/:count")
+    .get(function (req, res) {
+    var appName = req.params.appName,
+        eventType = req.params.eventType,
+        fieldName = req.params.field,
+        count = req.params.count;
+    
+    telemetry.aggregateByField({
+        applicationName: appName,
+        eventType: eventType,
+        fieldName: fieldName,
+        limit: count
+    }, function (err, result) {
+        if (err)
+            return res.json(err);
+        return res.json(result);
     });
+});
 
 router.route("/applicationStatistics/forApp/:appName/:eventType/groupBy/:groupField/getMaxFor/:maxField/top/:count")
-    .get(function(req, res) {
-        var appName = req.params.appName,
-            eventType = req.params.eventType,
-            fieldName = req.params.groupField,
-            maxField = req.params.maxField,
-            count = parseInt(req.params.count) || 0;
-
-        telemetry.aggregateByField({
-            applicationName: appName,
-            eventType: eventType,
-            fieldName: fieldName,
-            limit: max,
-            maxEntry: {
-                fieldName: req.params.maxField
-            }
-        }, function(err, result) {
-            if (err)
-                return res.json(err);
-            return res.json(result);
-        });
+    .get(function (req, res) {
+    var appName = req.params.appName,
+        eventType = req.params.eventType,
+        fieldName = req.params.groupField,
+        maxField = req.params.maxField,
+        count = parseInt(req.params.count) || 0;
+    
+    telemetry.aggregateByField({
+        applicationName: appName,
+        eventType: eventType,
+        fieldName: fieldName,
+        limit: count,
+        maxEntry: {
+            fieldName: maxField
+        }
+    }, function (err, result) {
+        if (err)
+            return res.json(err);
+        return res.json(result);
     });
+});
 
 module.exports = router;

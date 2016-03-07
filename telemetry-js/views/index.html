@@ -30,7 +30,12 @@
             </div>
         </div>
         <div ng-if="widget.type == 'Chart'" class="widget-content">
-            <canvas options="{animationSteps : 3, responsive: true}" class="chart-base" chart-type="widget.response.chartType" legend="false" data="widget.response.data" labels="widget.response.fields" colours="colors">
+            <canvas options="{animationSteps : 3, responsive: true}" class="chart-base"
+                    chart-type="widget.response.chartType"
+                    legend="false"
+                    data="widget.response.dataArray"
+                    labels="widget.response.labelArray" 
+                    colours="colors">
             </canvas>
         </div>
     </div>
